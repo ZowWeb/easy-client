@@ -1,5 +1,4 @@
 import { Layout } from 'antd'
-import Link from 'next/link'
 import styled from 'styled-components'
 
 import { RESPONSIVE_MAX_WIDTH, HEADER_HEIGHT } from 'constants/global'

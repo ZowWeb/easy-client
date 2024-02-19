@@ -21,13 +21,12 @@ type FlexBoxProps = Partial<{
 }>
 
 const Container = styled.div<FlexBoxProps>`
-  ${({ direction, align = 'normal', justify = 'normal', wrap }) =>
-    flex(direction, align, justify, wrap)}
-  flex: ${(props) => props.flex || '0 1 auto'};
-  height: ${(props) => props.height || 'auto'};
-  gap: ${(props) => (props.gap ? props.gap : null)};
-  row-gap: ${(props) => (props.rowGap ? props.rowGap : null)};
-  column-gap: ${(props) => (props.colGap ? props.colGap : null)};
+  ${({ direction, align = 'normal', justify = 'normal', wrap }) => flex(direction, align, justify, wrap)}
+  flex: ${props => props.flex || '0 1 auto'};
+  height: ${props => props.height || 'auto'};
+  gap: ${props => (props.gap ? props.gap : null)};
+  row-gap: ${props => (props.rowGap ? props.rowGap : null)};
+  column-gap: ${props => (props.colGap ? props.colGap : null)};
   ${({ responsive }) =>
     responsive
       ? css`

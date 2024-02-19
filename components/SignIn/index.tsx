@@ -1,4 +1,4 @@
-import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
+import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
 import Link from 'next/link'
 import { deleteCookie, setCookie } from 'cookies-next'
@@ -18,18 +18,14 @@ const SignInForm = () => {
   }, [])
 
   const onFinish = async (values: any) => {
-    console.log('Success:', values)
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}/user/signin`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values),
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_API_URL}/user/signin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      )
+        body: JSON.stringify(values),
+      })
 
       if ([400, 401].includes(response.status)) {
         const signUpResponse: ServerErrorResponse = await response.json()
@@ -64,23 +60,11 @@ const SignInForm = () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="email"
-        rules={[{ required: true, message: 'Please input your email!' }]}
-      >
-        <Input
-          prefix={<MailOutlined className="site-form-item-icon" />}
-          placeholder="Email"
-        />
+      <Form.Item name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
+        <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
       </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: 'Please input your Password!' }]}
-      >
-        <Input.Password
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          placeholder="Password"
-        />
+      <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
+        <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
       </Form.Item>
       <Form.Item name="remember" valuePropName="checked">
         <Checkbox>Remember me</Checkbox>

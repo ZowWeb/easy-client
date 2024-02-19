@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
-import { Button, Checkbox, Form, Input } from 'antd'
+import { Button, Form, Input } from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { setCookie } from 'cookies-next'
@@ -14,18 +13,14 @@ const SignUp = () => {
   const { notification } = useFeedback()
 
   const onFinish = async (values: any) => {
-    console.log('Success:', values)
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}/user/signup`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values),
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_API_URL}/user/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      )
+        body: JSON.stringify(values),
+      })
 
       if ([400, 401].includes(response.status)) {
         const signUpResponse: ServerErrorResponse = await response.json()
@@ -60,32 +55,14 @@ const SignUp = () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="name"
-        rules={[{ required: true, message: 'Please input your name!' }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Full Name"
-        />
+      <Form.Item name="name" rules={[{ required: true, message: 'Please input your name!' }]}>
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Full Name" />
       </Form.Item>
-      <Form.Item
-        name="email"
-        rules={[{ required: true, message: 'Please input your email!' }]}
-      >
-        <Input
-          prefix={<MailOutlined className="site-form-item-icon" />}
-          placeholder="Email"
-        />
+      <Form.Item name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
+        <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
       </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: 'Please input your Password!' }]}
-      >
-        <Input.Password
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          placeholder="Password"
-        />
+      <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
+        <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
       </Form.Item>
       <Form.Item className="signup-form-button-wrapper">
         <Button type="primary" htmlType="submit">

@@ -1,29 +1,12 @@
 import { Dropdown, MenuProps } from 'antd'
-import Link from 'next/link'
 import { ExportOutlined, HeartTwoTone, UserOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
 import { deleteCookie } from 'cookies-next'
 
-import {
-  AntLayout,
-  StyledHeader,
-  Main,
-  StyledFooter,
-  User,
-  MaxWidth,
-  HeaderWrapper,
-  LogoutBtn,
-} from './styles'
 import Image from 'next/image'
-import FlexBox from 'components/FlexBox'
+import { AntLayout, StyledHeader, Main, StyledFooter, User, MaxWidth, LogoutBtn } from './styles'
 
-const Layout = ({
-  children,
-  name,
-}: {
-  children: React.ReactNode
-  name?: string
-}) => {
+const Layout = ({ children, name }: { children: React.ReactNode; name?: string }) => {
   const router = useRouter()
 
   const handleLogout = () => {
@@ -49,11 +32,7 @@ const Layout = ({
         <MaxWidth>
           <Image src="/logo.svg" alt="Logo" width={100} height={80} priority />
           {name && (
-            <Dropdown
-              menu={{ items: dropdownItems }}
-              arrow
-              placement="bottomCenter"
-            >
+            <Dropdown menu={{ items: dropdownItems }} arrow placement="bottomCenter">
               <User>
                 <UserOutlined />
                 {name}
@@ -65,8 +44,7 @@ const Layout = ({
       <Main>{children}</Main>
       <StyledFooter>
         <h4 style={{ marginBottom: '2rem' }}>
-          Made with <HeartTwoTone twoToneColor="#eb2f96" /> by{' '}
-          <a href="dev.zohaib.in">zowweb</a>
+          Made with <HeartTwoTone twoToneColor="#eb2f96" /> by <a href="dev.zohaib.in">zowweb</a>
         </h4>
         <p>&copy; {new Date().getFullYear()} Zohaib Khan</p>
       </StyledFooter>

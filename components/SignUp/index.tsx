@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect } from 'react'
-import { Button, Checkbox, Form, Input, notification } from 'antd'
+import { Button, Checkbox, Form, Input } from 'antd'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { setCookie } from 'cookies-next'
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
 
 import { ServerErrorResponse, UserResponse } from 'types'
 import useFeedback from 'hooks/useFeedback'
+import { StyledForm } from './styles'
 
 const SignUp = () => {
   const router = useRouter()
@@ -25,7 +27,7 @@ const SignUp = () => {
         },
       )
 
-      if (response.status === 400) {
+      if ([400, 401].includes(response.status)) {
         const signUpResponse: ServerErrorResponse = await response.json()
         notification.error({
           key: 'error',
@@ -35,13 +37,14 @@ const SignUp = () => {
         return
       }
       if ([200, 201].includes(response.status)) {
-        const signUpResponse: UserResponse = await response.json()
+        const userResponse: UserResponse = await response.json()
         notification.success({
           key: 'success',
-          message: signUpResponse.statusCode,
-          description: 'Welcome!',
+          message: 'Welcome!',
         })
-        setCookie('token', signUpResponse.token)
+        setCookie('token', userResponse.token, {
+          maxAge: userResponse.expiresIn,
+        })
         router.push('/welcome')
       }
     } catch (e) {
@@ -50,11 +53,9 @@ const SignUp = () => {
   }
 
   return (
-    <Form
+    <StyledForm
       name="signup"
       className="signup-form"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
@@ -81,18 +82,18 @@ const SignUp = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your Password!' }]}
       >
-        <Input
+        <Input.Password
           prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
           placeholder="Password"
         />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item className="signup-form-button-wrapper">
         <Button type="primary" htmlType="submit">
-          Submit
+          Sign up
         </Button>
+        <Link href="/">Log In!</Link>
       </Form.Item>
-    </Form>
+    </StyledForm>
   )
 }
 

@@ -1,9 +1,23 @@
 import { deleteCookie, getCookie } from 'cookies-next'
 import { GetServerSideProps } from 'next'
 import jwt from 'jsonwebtoken'
+import { Result } from 'antd'
 
-const Welcome = () => {
-  return <div>Welcome to the application.</div>
+import Layout from 'components/Layout'
+import Image from 'next/image'
+
+const Welcome = ({ name }: { name: string }) => {
+  return (
+    <Layout name={name}>
+      <Image
+        src="/welcome.webp"
+        alt="welcome"
+        width={800}
+        height={500}
+        priority
+      />
+    </Layout>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -11,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   if (!token) {
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     }
@@ -31,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     deleteCookie('token')
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     }
@@ -42,14 +56,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     deleteCookie('token')
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     }
   }
 
+  console.log('decodedToken', decodedToken)
+
   return {
-    props: {},
+    props: {
+      name: decodedToken.name,
+    },
   }
 }
 

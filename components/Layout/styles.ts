@@ -9,7 +9,7 @@ import FlexBox from 'components/FlexBox'
 const { Header, Content, Footer } = Layout
 
 export const MaxWidth = styled.div`
-  ${flex('row', 'normal', 'space-between')}
+  ${flex()}
   flex: 1;
   width: 100%;
   max-width: ${RESPONSIVE_MAX_WIDTH};
@@ -37,30 +37,32 @@ export const StyledHeader = styled(Header)`
     color: #fff;
     box-shadow: 0px 3px 6px #00000029;
   }
+
+  .ant-dropdown-trigger {
+    ${flex()}
+    gap: 0.5rem;
+  }
 `
 
 export const HeaderWrapper = styled(FlexBox)`
   width: 100%;
 `
 
-export const StyledFooter = styled(Footer)``
-
-export const LogoLinkWrapper = styled(Link)`
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  font-weight: 700;
-
-  img {
-    object-fit: contain;
-  }
+export const StyledFooter = styled(Footer)`
+  ${flex('column', 'center', 'center')}
 `
 
 export const User = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
   cursor: pointer;
   max-height: 1.5rem;
-  margin: auto 0;
+  margin-left: auto;
+`
+
+export const LogoutBtn = styled.div`
+  ${flex()}
+  width: 10rem;
+  gap: 0.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 `

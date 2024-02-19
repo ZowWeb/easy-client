@@ -1,12 +1,13 @@
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
 import Link from 'next/link'
-
-import useFeedback from 'hooks/useFeedback'
-import { ServerErrorResponse, UserResponse } from 'types'
 import { deleteCookie, setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+
+import useFeedback from 'hooks/useFeedback'
+import { ServerErrorResponse, UserResponse } from 'types'
+import { StyledForm } from './styles'
 
 const SignInForm = () => {
   const router = useRouter()
@@ -30,7 +31,7 @@ const SignInForm = () => {
         },
       )
 
-      if (response.status === 400) {
+      if ([400, 401].includes(response.status)) {
         const signUpResponse: ServerErrorResponse = await response.json()
         notification.error({
           key: 'error',
@@ -40,13 +41,14 @@ const SignInForm = () => {
         return
       }
       if ([200, 201].includes(response.status)) {
-        const signUpResponse: UserResponse = await response.json()
+        const userResponse: UserResponse = await response.json()
         notification.success({
           key: 'success',
-          message: signUpResponse.statusCode,
-          description: 'Welcome!',
+          message: 'Welcome!',
         })
-        setCookie('token', signUpResponse.token)
+        setCookie('token', userResponse.token, {
+          maxAge: userResponse.expiresIn,
+        })
         router.push('/welcome')
       }
     } catch (e) {
@@ -55,9 +57,10 @@ const SignInForm = () => {
   }
 
   return (
-    <Form
+    <StyledForm
       name="login"
       className="login-form"
+      style={{ maxWidth: 500 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
@@ -74,29 +77,22 @@ const SignInForm = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your Password!' }]}
       >
-        <Input
+        <Input.Password
           prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
           placeholder="Password"
         />
       </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
+      <Form.Item name="remember" valuePropName="checked">
+        <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+      <Form.Item className="login-form-button-wrapper">
+        <Button type="primary" htmlType="submit">
           Log in
         </Button>
         Or <Link href="/signup">register now!</Link>
       </Form.Item>
-    </Form>
+    </StyledForm>
   )
 }
 

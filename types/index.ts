@@ -6,5 +6,5 @@ export type ServerErrorResponse = {
 
 export type UserResponse = {
   token: string
-  statusCode: number
+  expiresIn: number
 }

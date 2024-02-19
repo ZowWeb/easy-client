@@ -1,21 +1,26 @@
-import React, { useCallback, useEffect } from 'react'
-import { Button, Checkbox, Form, Input, notification } from 'antd'
-import { useRouter } from 'next/navigation'
-import { setCookie } from 'cookies-next'
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Checkbox, Form, Input } from 'antd'
+import Link from 'next/link'
 
-import { ServerErrorResponse, UserResponse } from 'types'
 import useFeedback from 'hooks/useFeedback'
+import { ServerErrorResponse, UserResponse } from 'types'
+import { deleteCookie, setCookie } from 'cookies-next'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
-const SignUp = () => {
+const SignInForm = () => {
   const router = useRouter()
   const { notification } = useFeedback()
+
+  useEffect(() => {
+    deleteCookie('token')
+  }, [])
 
   const onFinish = async (values: any) => {
     console.log('Success:', values)
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}/user/signup`,
+        `${process.env.NEXT_PUBLIC_SERVER_API_URL}/user/signin`,
         {
           method: 'POST',
           headers: {
@@ -51,23 +56,11 @@ const SignUp = () => {
 
   return (
     <Form
-      name="signup"
-      className="signup-form"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      style={{ maxWidth: 600 }}
+      name="login"
+      className="login-form"
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="name"
-        rules={[{ required: true, message: 'Please input your name!' }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Full Name"
-        />
-      </Form.Item>
       <Form.Item
         name="email"
         rules={[{ required: true, message: 'Please input your email!' }]}
@@ -87,13 +80,24 @@ const SignUp = () => {
           placeholder="Password"
         />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
+      <Form.Item>
+        <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <a className="login-form-forgot" href="">
+          Forgot password
+        </a>
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="login-form-button">
+          Log in
         </Button>
+        Or <Link href="/signup">register now!</Link>
       </Form.Item>
     </Form>
   )
 }
 
-export default SignUp
+export default SignInForm

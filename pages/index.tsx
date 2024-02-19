@@ -1,14 +1,15 @@
-import FlexBox from 'components/FlexBox'
-import SignUp from 'components/SignUp'
+import { ConfigProvider, ThemeConfig, App as AntApp } from 'antd'
 
-export default function Home() {
+import FlexBox from 'components/FlexBox'
+import Layout from 'components/Layout'
+import SignInForm from 'components/SignIn'
+
+export default function LoginPage() {
   return (
-    <FlexBox
-      justify="center"
-      align="center"
-      style={{ width: '100vw', height: '100vh' }}
-    >
-      <SignUp />
-    </FlexBox>
+    <Layout>
+      <FlexBox justify="center" align="center">
+        <SignInForm />
+      </FlexBox>
+    </Layout>
   )
 }

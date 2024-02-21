@@ -69,7 +69,6 @@ const SignInForm = () => {
       <Form.Item name="remember" valuePropName="checked">
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
-
       <Form.Item className="login-form-button-wrapper">
         <Button type="primary" htmlType="submit">
           Log in

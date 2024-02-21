@@ -44,7 +44,10 @@ const Layout = ({ children, name }: { children: React.ReactNode; name?: string }
       <Main>{children}</Main>
       <StyledFooter>
         <h4 style={{ marginBottom: '2rem' }}>
-          Made with <HeartTwoTone twoToneColor="#eb2f96" /> by <a href="dev.zohaib.in">zowweb</a>
+          Made with <HeartTwoTone twoToneColor="#eb2f96" /> by{' '}
+          <a href="https://dev.zohaib.in" target="_blank" rel="noreferrer">
+            zowweb
+          </a>
         </h4>
         <p>&copy; {new Date().getFullYear()} Zohaib Khan</p>
       </StyledFooter>

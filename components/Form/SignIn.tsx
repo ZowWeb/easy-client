@@ -53,13 +53,7 @@ const SignInForm = () => {
   }
 
   return (
-    <StyledForm
-      name="login"
-      className="login-form"
-      style={{ maxWidth: 500 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-    >
+    <StyledForm name="login" className="login-form" initialValues={{ remember: true }} onFinish={onFinish}>
       <Form.Item name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
         <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
       </Form.Item>
@@ -69,7 +63,7 @@ const SignInForm = () => {
       <Form.Item name="remember" valuePropName="checked">
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
-      <Form.Item className="login-form-button-wrapper">
+      <Form.Item className="form-button-wrapper">
         <Button type="primary" htmlType="submit">
           Log in
         </Button>

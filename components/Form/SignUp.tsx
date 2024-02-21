@@ -48,13 +48,7 @@ const SignUp = () => {
   }
 
   return (
-    <StyledForm
-      name="signup"
-      className="signup-form"
-      style={{ maxWidth: 600 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-    >
+    <StyledForm name="signup" className="signup-form" initialValues={{ remember: true }} onFinish={onFinish}>
       <Form.Item name="name" rules={[{ required: true, message: 'Please input your name!' }]}>
         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Full Name" />
       </Form.Item>
@@ -64,7 +58,7 @@ const SignUp = () => {
       <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
         <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
       </Form.Item>
-      <Form.Item className="signup-form-button-wrapper">
+      <Form.Item className="form-button-wrapper">
         <Button type="primary" htmlType="submit">
           Sign up
         </Button>

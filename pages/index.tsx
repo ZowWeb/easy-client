@@ -1,20 +1,28 @@
-import Image from 'next/image'
 import { Divider } from 'antd'
 
-import FlexBox from 'components/FlexBox'
 import Layout from 'components/Layout'
-import SignInForm from 'components/SignIn'
+import SignInForm from 'components/Form/SignIn'
+import ResponsiveNextImage from 'components/Image'
+import { ImageAndFormWrapper } from './signup'
 
 export default function LoginPage() {
   return (
     <Layout>
-      <FlexBox direction="column" justify="center" align="center" gap="2rem">
-        <Image src="/agent.svg" alt="login-image" width={600} height={300} />
-        <Divider>
+      <ImageAndFormWrapper>
+        <ResponsiveNextImage
+          wrapperStyle={{ width: '100%', height: '100%' }}
+          nextImgProps={{
+            src: '/agent.svg',
+            alt: 'login-image',
+            objectFit: 'contain',
+            fill: true,
+          }}
+        />
+        <Divider className="heading">
           <h2>Here you are again!</h2>
         </Divider>
         <SignInForm />
-      </FlexBox>
+      </ImageAndFormWrapper>
     </Layout>
   )
 }

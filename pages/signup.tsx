@@ -27,7 +27,7 @@ export const ImageAndFormWrapper = styled.div`
   }
 `
 
-export default function LoginPage() {
+export default function SignUpPage() {
   return (
     <Layout>
       <ImageAndFormWrapper>
